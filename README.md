@@ -1,6 +1,6 @@
 # Week 0 Progress
     
-    ## Environment & Data Setup
+    #Environment & Data Setup
     - Set up local development environment in VS Code.
     - Downloaded all raw MLS CSV files from the FTP /raw directory.
     
