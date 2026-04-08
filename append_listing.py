@@ -1,7 +1,7 @@
 import pandas as pd
 import glob
 
-files = sorted(glob.glob("/Users/khoatran/Desktop/da5/csvs/CRMLSSold*.csv"))  # adjust pattern to match your filenames
+files = sorted(glob.glob("/Users/khoatran/Desktop/da5/csvs/CRMLSSold*.csv")) 
 df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
 
 print(f"Loaded {len(files)} files, {len(df)} total rows")
