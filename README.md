@@ -20,3 +20,12 @@
 ## Organization
 - Saved filtered dataset into a new CSV
   
+# Week 2-3 Continued  Progress
+## Set Up
+- Fetched mortgage rate data using FERD
+- Resampled weekly rates to monthly averages
+- Created a matching year_month key
+- Merged sold, listing, and validated the merge
+
+## Organization
+- Exported new listing and sold datasets as a CSV
