@@ -20,7 +20,7 @@
 ## Organization
 - Saved filtered dataset into a new CSV
   
-# Week 2-3 Continued  Progress
+# Week 2-3 Continued Progress
 ## Set Up
 - Fetched mortgage rate data using FERD
 - Resampled weekly rates to monthly averages
@@ -29,3 +29,20 @@
 
 ## Organization
 - Exported new listing and sold datasets as a CSV
+
+# Week 4-5 Data Cleaning and Prep
+## Set Up
+- Converted core date fields into standardized datetime formats
+- Enforced numeric data types for key analysis 
+- Removed invalid records where ClosePrice or LivingArea were less than or equal to zero
+- Filtered out records with negative values for DaysOnMarket, BedroomsTotal, or BathroomsTotalInteger
+
+## Quality FLagging
+- Created listing_after_close_flag and purchase_after_close_flag to identify logical date inconsistencies
+- Engineered a negative_timeline_flag to catch records where the listing or purchase date occurred after the closing date
+- Implemented geographic auditing 
+- Flagged implausible coordinates
+
+## Organization
+- Exported and finalized clean records
+- Documented transformations
