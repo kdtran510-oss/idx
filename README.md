@@ -46,3 +46,20 @@
 ## Organization
 - Exported and finalized clean records
 - Documented transformations
+
+# Week 6 Feature Engineering and Market Metrics
+## Engineered Metrics
+- Calculated Price Ratio and Close-to-Original List Ratio to measure negotiation strength and price reduction history
+- Developed Price Per Sq Ft metrics to normalize property values across different living area sizes
+- Constructed YrMo time-series variables from closing dates to enable monthly market trend analysis
+- Engineered Listing to Contract Days and Contract to Close Days to measure escrow duration and market velocity
+
+## Segment Analysis
+- Performed multi-dimensional aggregations grouped by Property Type and SubType to uncover property-specific performance
+- Conducted geographic market analysis by grouping metrics by County/Parish and MLS Area
+- Generated competitive intelligence summaries by segmenting performance by Listing Office and Buyer Office
+
+## Deliverables
+- Exported final processed datasets for both Sold and Listing pipelines for integration into Tableau dashboards
+- Implemented robust aggregation logic to handle mixed data types and ensure mathematical accuracy
+- Documented all engineered feature formulas and purposes
