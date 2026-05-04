@@ -63,3 +63,20 @@
 - Exported final processed datasets for both Sold and Listing pipelines for integration into Tableau dashboards
 - Implemented robust aggregation logic to handle mixed data types and ensure mathematical accuracy
 - Documented all engineered feature formulas and purposes
+
+# Week 7 Outlier Detection and Data Quality
+## Outlier Detection Logic
+- Applied the Interquartile Range (IQR) method to identify statistical outliers in Close Price, Living Area, and Days on Market
+- Established mathematical lower and upper bounds using the 1.5x IQR threshold to isolate extreme data points
+- Calculated the percentage shift in medians before and after filtering to quantify the impact of statistical noise
+
+## Data Quality & Flagging
+- Implemented non-destructive boolean flags (e.g., _is_outlier) to preserve raw records while enabling targeted filtering
+- Developed a vectorized filtering mechanism to generate a "clean" dataset where records must pass all quality checks
+- Generated comparison reports documenting specific bounds, outlier counts, and total row removals for transparency
+
+### Deliverables
+- Exported listing_full_flagged.csv containing the complete dataset with integrated quality markers
+- Produced listing_clean_filtered.csv as a high-integrity source for advanced statistical analysis
+- Documented field-specific statistical summaries including distribution bounds and median variance
+

@@ -154,8 +154,6 @@ print("\n--- WEEK 6 DELIVERABLES ---")
 
 # Price Ratios
 if all(c in df.columns for c in ['ClosePrice', 'OriginalListPrice']):
-    # The image lists "Price Ratio" and "Close to Original List Ratio" with the exact same formula, 
-    # so we will generate both to match the spec strictly.
     df['PriceRatio'] = df['ClosePrice'] / df['OriginalListPrice']
     df['CloseToOriginalListRatio'] = df['PriceRatio']
 
@@ -222,6 +220,67 @@ elif 'PropertyType' in df.columns:
     print(deliverable_summary)
 
 # Save the final dataset ready for Tableau
-df.to_csv("sold_tableau_ready.csv", index=False)
+# df.to_csv("sold_tableau_ready.csv", index=False)
 
-# %%
+# %% [markdown]
+# # Week 7: Outlier Detection and Data Quality
+# This cell implements the IQR method to identify and flag statistical outliers 
+# in ClosePrice, LivingArea, and DaysOnMarket.
+
+print("\n--- WEEK 7 DELIVERABLES ---")
+
+# 1. Define fields for outlier detection [cite: 234]
+outlier_fields = ['ClosePrice', 'LivingArea', 'DaysOnMarket']
+stats_comparison = {}
+
+# 2. Apply IQR Flagging Logic [cite: 216, 235]
+# Logic: Lower = Q1 - 1.5*IQR | Upper = Q3 + 1.5*IQR [cite: 221, 222]
+for col in outlier_fields:
+    if col in df.columns:
+        # Calculate IQR components [cite: 218, 219, 220]
+        Q1 = df[col].quantile(0.25)
+        Q3 = df[col].quantile(0.75)
+        IQR = Q3 - Q1
+        
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+        
+        # Capture medians before filtering 
+        median_before = df[col].median()
+        
+        # Create outlier flag column (1=Outlier, 0=Normal) 
+        flag_name = f'{col}_is_outlier'
+        df[flag_name] = (df[col] < lower_bound) | (df[col] > upper_bound)
+        
+        # Store metadata for comparison report 
+        stats_comparison[col] = {
+            'median_before': median_before,
+            'lower_bound': lower_bound,
+            'upper_bound': upper_bound,
+            'outlier_count': df[flag_name].sum()
+        }
+
+# 3. Create the Clean Filtered Dataset 
+# Records are excluded from the clean set if they are an outlier in any of the 3 fields
+outlier_cols = [f'{col}_is_outlier' for col in outlier_fields if f'{col}_is_outlier' in df.columns]
+df_clean = df[~df[outlier_cols].any(axis=1)].copy()
+
+# 4. Written Comparison Report 
+print("\n[Outlier Detection Summary]")
+for col, data in stats_comparison.items():
+    median_after = df_clean[col].median()
+    print(f"Field: {col}")
+    print(f"  - Bounds: {data['lower_bound']:.2f} to {data['upper_bound']:.2f}")
+    print(f"  - Outliers Flagged: {data['outlier_count']}")
+    print(f"  - Median Before: {data['median_before']:,.2f} | Median After: {median_after:,.2f}")
+
+print(f"\n[Dataset Size Comparison] ")
+print(f"Full Flagged Dataset: {len(df)} rows")
+print(f"Clean Filtered Dataset: {len(df_clean)} rows")
+print(f"Total Rows Removed for Clean Set: {len(df) - len(df_clean)}")
+
+# 5. Save Deliverables 
+df.to_csv("sold_full_flagged.csv", index=False)
+df_clean.to_csv("sold_clean_filtered.csv", index=False)
+
+print("\nSuccess: Both 'sold_full_flagged.csv' and 'sold_clean_filtered.csv' exported.")
